@@ -1,16 +1,14 @@
-# Iran Ultimate Anti-Censorship System (v10) - GOD MODE
+# Iran Hyper-Stealth Config (v12) - GOD MODE
 # Updated: 2025-06-28 | Tested on: Irancell, MCI, Rightel
 
 meta:
-  strategy: "hyper_stealth"
-  threat_level: "extreme_iran"
-  update_url: "https://raw.githubusercontent.com/yourusername/reality-subb/main/reality.yaml"
+  strategy: "quantum_bypass"
+  threat_level: "iran_extreme"
+  update_key: "0xIRANBYPASS2025"
 
-# ---------------------------
-# Proxies (Multi-Protocol)
-# ---------------------------
+# لایه ۱: پروتکل‌های ترکیبی (ایران-بهینه‌سازی شده)
 proxies:
-  # Reality (Iran-Optimized)
+  # Reality (ایران-سازگار)
   - name: "REALITY-IR-01"
     type: vless
     server: edge.snappfood.ir  # CDN داخلی برای استتار
@@ -66,21 +64,30 @@ proxies:
       tls: true
       path: "/download"
 
-# ---------------------------
-# DNS (Iran-Optimized)
-# ---------------------------
+  # Hysteria2 (برای شبکه‌های با افت شدید)
+  - name: "HY2-IR-UDP"
+    type: hysteria2
+    server: game.iranapps.ir  # دامنه اپلیکیشن ایرانی
+    port: 443
+    password: "YOUR_HYSTERIA_PASSWORD"
+    obfs: salamander
+    obfs-password: "YOUR_OBFS_PASS"
+    sni: dl.iranlms.ir  # استتار آموزش ایرانی
+
+# لایه ۲: DNS پویا (ایران-بهینه)
 dns:
   enable: true
-  listen: 0.0.0.0:53
+  listen: 0.0.0.0:5353
   enhanced-mode: redir-host
+  fake-ip-range: 198.18.0.1/16
   use-hosts: true
   nameserver:
     - "https://shecan.ir/dns-query"  # DNS ایرانی ضد فیلتر
     - "https://dns.403.online/dns-query"  # DNS ضد فیلتر
     - "https://dns.google/dns-query#ipv4"
   fallback:
-    - "tls://dns11.quad9.net:853#quad9"
-    - "https://doh.opendns.com/dns-query"
+    - "tls://dns11.quad9.net:853"
+    - "https://doh.opendns.com/dns-query?dns=QlVBTg"
   fallback-filter:
     geoip: true
     geoip-code: IR
@@ -93,9 +100,7 @@ dns:
       - "+.ir"
       - "+.filter"
 
-# ---------------------------
-# Proxy Groups (Intelligent Routing)
-# ---------------------------
+# لایه ۳: گروه‌های هوشمند (مسیریابی پیشرفته)
 proxy-groups:
   - name: "🚀 IR-AUTO"
     type: url-test
@@ -107,6 +112,7 @@ proxy-groups:
       - TROJAN-IR-01
       - VMESS-IR-WS
       - SS-IR-OBFUS
+      - HY2-IR-UDP
 
   - name: "🔒 FAILSAFE-IR"
     type: fallback
@@ -116,9 +122,7 @@ proxy-groups:
       - "🚀 IR-AUTO"
       - DIRECT
 
-# ---------------------------
-# Rules (Advanced)
-# ---------------------------
+# لایه ۴: قوانین هوشمند (ایران-ویژه)
 rules:
   # حذف ترافیک نظارتی
   - DOMAIN-KEYWORD,snitch,REJECT
@@ -149,9 +153,7 @@ rules:
   # قانون نهایی
   - MATCH,🔒 FAILSAFE-IR
 
-# ---------------------------
-# Tun Settings (برای اندروید)
-# ---------------------------
+# لایه ۵: بهینه‌سازی شبکه (ایران-ویژه)
 tun:
   enable: true
   stack: system
@@ -160,20 +162,33 @@ tun:
   auto-route: true
   auto-detect-interface: true
 
-# ---------------------------
-# Experimental Features
-# ---------------------------
+# لایه ۶: تکنیک‌های ضد DPI (پیشرفته)
 experimental:
   tcp-fast-open: true
   udp-fragment: true
   sniff-tls-sni: true
   proxy-protocol: 2
+  tcp-keep-alive-interval: 10
 
-# ---------------------------
-# Auto-Update System
-# ---------------------------
+# لایه ۷: سیستم به‌روزرسانی خودکار
 auto-update:
   enable: true
   url: "https://raw.githubusercontent.com/yourusername/reality-subb/main/reality.yaml"
-  interval: 43200  # هر 12 ساعت
+  interval: 21600  # هر ۶ ساعت
   proxy: DIRECT
+
+# لایه ۸: مکانیزم چرخشی (ضد بلوکه شدن)
+rotation:
+  enable: true
+  interval: 3600  # تغییر پیکربندی هر ۱ ساعت
+  strategy: "domain-shuffle"
+  pool:
+    - "www.alibaba.ir"
+    - "cdn.snapp.ir"
+    - "dl.digikala.com"
+
+# لایه ۹: سیستم هشدار امنیتی
+security-alerts:
+  enable: true
+  webhook: "https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage"
+  threshold: 3
