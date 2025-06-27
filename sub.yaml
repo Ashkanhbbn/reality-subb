@@ -1,83 +1,80 @@
-#
-# 🛡️ GOD MODE PRO CONFIG (v12.1) - The Unbreakable Iranian Shield 🛡️
-#
-# Author: Gemini Pro-Analysis
-# Philosophy: Chameleon Strategy, Dynamic Resilience, Performance Tuning, Layered Security
-# Last Updated: 2025-06-28
-#
-
 meta:
-  name: "🇮🇷 IRAN God Mode Pro"
-  description: "پیکربندی فوق‌پیشرفته برای مقابله با فیلترینگ شدید در ایران. ترکیبی از استتار، سرعت و پایداری."
-  author: "Gemini Pro"
-  update-url: "https://raw.githubusercontent.com/yourusername/reality-subb/main/god-mode-pro.yaml" # لینک به‌روزرسانی خودکار
+  name: "🇮🇷 IRAN God Mode Pro v13.0"
+  description: "Ultimate Chameleon Config - Adaptive, Stealthy, Invincible"
+  author: "Gemini Pro + ChatGPT Fusion"
+  update-url: "https://raw.githubusercontent.com/yourusername/reality-subb/main/god-mode-pro.yaml"
 
-# LAYER 1: PROTOCOL ARMORY (Multi-Spectrum Evasion)
-# استراتژی: استفاده از پروتکل‌های متنوع با استتار روی CDNهای داخلی برای حداکثر مقاومت
 proxies:
-  # 🥇 Primary: VLESS + Reality + Vision - بهترین گزینه برای پایداری و استتار
-  - name: "🚀 REALITY-Prime"
+  - name: "🌈 REALITY-Prime"
     type: vless
-    server: cdn.digikala.com       # سرور CDN داخلی معتبر با ترافیک بالا
+    server: cdn.digikala.com
     port: 443
-    uuid: "YOUR_UUID_HERE"         # <--- UUID واقعی خود را اینجا وارد کنید
+    uuid: "YOUR_UUID_HERE"
     network: tcp
     tls: true
-    servername: www.digikala.com   # دامنه ایرانی معتبر برای SNI
+    servername: www.digikala.com
     flow: xtls-rprx-vision
     reality-opts:
-      public-key: "YOUR_PUBLIC_KEY_HERE" # <--- کلید عمومی واقعی خود را اینجا وارد کنید
-      short-id: "7d4a"             # شناسه کوتاه برای کاهش ردپا
-      spider-x: "/"                # مسیر رندوم برای فریب سیستم‌های تشخیص
-    client-fingerprint: chrome     # اثر انگشت مرورگر رایج
+      public-key: "YOUR_PUBLIC_KEY_HERE"
+      short-id: "7d4a"
+      spider-x: "/api/v2/resource?id=YOURID"
+      probe-resistant: true
+    client-fingerprint: chrome
     udp: true
 
-  # 🥈 Secondary: Trojan - سریع و کارآمد با استتار روی CDN
-  - name: "🚀 TROJAN-Stealth"
+  - name: "🦎 TUICv5-SHADOW"
+    type: tuic
+    server: gameslycdn.ir
+    port: 443
+    uuid: "YOUR_UUID_HERE"
+    password: "YOUR_TUIC_PASSWORD"
+    alpn: ["h3", "spdy/3"]
+    sni: gameslycdn.ir
+    udp: true
+    congestion-controller: bbr
+
+  - name: "⚡ HYSTERIA2-ADV"
+    type: hysteria2
+    server: api.tapsi.ir
+    port: 443
+    password: "YOUR_HYSTERIA_PASSWORD"
+    obfs: salamander
+    obfs-password: "YOUR_OBFS_PASS"
+    sni: api.tapsi.ir
+    decoy-host: web.whatsapp.com
+    udp: true
+
+  - name: "🛡️ TROJAN-Stealth"
     type: trojan
-    server: edge.snappfood.ir      # استفاده از CDN اسنپ‌فود
+    server: edge.snappfood.ir
     port: 443
-    password: "YOUR_STRONG_PASSWORD_HERE" # <--- پسورد قوی خود را اینجا وارد کنید
-    sni: www.snapp.ir              # دامنه معتبر برای SNI
-    alpn: ["h2", "http/1.1"]       # پشتیبانی از پروتکل‌های جدیدتر
-    skip-cert-verify: false
+    password: "YOUR_STRONG_PASSWORD"
+    sni: www.snapp.ir
+    alpn: ["h2", "http/1.1"]
     udp: true
 
-  # 🥉 Tertiary: VMess + WebSocket + TLS - سازگاری بالا در شبکه‌های محدود
-  - name: "🚀 VMESS-WS"
+  - name: "🕸️ VMESS-WS-OBFS"
     type: vmess
-    server: dl.gamesly.ir          # CDN بازی (ترافیک معمولاً کمتر بررسی می‌شود)
+    server: dl.gamesly.ir
     port: 443
-    uuid: "YOUR_UUID_HERE"         # <--- UUID واقعی خود را اینجا وارد کنید
+    uuid: "YOUR_UUID_HERE"
     alterId: 0
-    cipher: auto                   # انتخاب خودکار بهترین رمزنگاری
+    cipher: auto
     tls: true
     network: ws
     ws-opts:
-      path: "/v1/updates/check?version=2.5" # مسیر استتار شده شبیه به یک درخواست API
+      path: "/v2/obfspath/$(openssl rand -hex 3)?ref=telegram"
       headers:
         Host: dl.gamesly.ir
     udp: true
 
-  # 🌪️ Specialty: Hysteria2 - بهترین عملکرد در شبکه‌های با Packet Loss شدید (مخصوصاً اینترنت ماهواره‌ای یا موبایل ضعیف)
-  - name: "🚀 HY2-UDP-Storm"
-    type: hysteria2
-    server: app.tapsi.ir           # سرور اپلیکیشن ایرانی
-    port: 443
-    password: "YOUR_HYSTERIA_PASSWORD_HERE" # <--- پسورد هیستریا
-    obfs: salamander               # ابفوسکیشن قدرتمند برای UDP
-    obfs-password: "YOUR_OBFS_PASS_HERE" # <--- پسورد ابفوسکیشن
-    sni: api.tapsi.ir              # استتار روی API تپسی
-    udp: true
-
-  # 🚨 FALLBACK: Emergency VMess - یک راه نجات ساده و سریع برای شرایط بحرانی
   - name: "🚨 EMERGENCY-VMESS"
     type: vmess
     server: "cdn.jabama.ir"
     port: 443
-    uuid: "YOUR_EMERGENCY_UUID_HERE" # <--- UUID اضطراری
+    uuid: "YOUR_EMERGENCY_UUID_HERE"
     alterId: 0
-    cipher: "none"                 # برای حداکثر سرعت در شرایط اضطراری (ترافیک همچنان با TLS امن است)
+    cipher: "none"
     tls: true
     network: ws
     ws-opts:
@@ -87,94 +84,77 @@ proxies:
     client-fingerprint: "firefox"
     udp: true
 
-# LAYER 2: INTELLIGENT DNS (Anti-Poisoning System)
-# استراتژی: تفکیک هوشمند DNS برای دسترسی بدون اختلال به سرویس‌های داخلی و خارجی
+proxy-groups:
+  - name: "PROXY-CHAIN"
+    type: load-balance
+    url: "http://cp.cloudflare.com/generate_204"
+    interval: 200
+    proxies:
+      - "🌈 REALITY-Prime"
+      - "🦎 TUICv5-SHADOW"
+      - "⚡ HYSTERIA2-ADV"
+      - "🛡️ TROJAN-Stealth"
+      - "🕸️ VMESS-WS-OBFS"
+      - "🚨 EMERGENCY-VMESS"
+
+  - name: "AUTO-FAILSAFE"
+    type: fallback
+    url: "http://www.bing.com"
+    interval: 100
+    proxies:
+      - "PROXY-CHAIN"
+      - DIRECT
+
 dns:
   enable: true
   listen: 0.0.0.0:5353
-  enhanced-mode: redir-host        # حالت بهینه برای TUN Mode
-  fake-ip-range: 198.18.0.1/16
-  use-hosts: true
+  enhanced-mode: redir-host
   nameserver:
-    - "https://dns.shecan.ir/dns-query"     # DNS ایرانی ضدتحریم (برای سایت‌های ایرانی)
-    - "https://dns.403.online/dns-query"   # DNS ایرانی ضدتحریم جایگزین
-    - "tls://1.1.1.1:853"                  # Cloudflare DNS over TLS
-    - "https://dns.google/dns-query"       # Google DNS over HTTPS
+    - "https://dns.shecan.ir/dns-query"
+    - "https://dns.403.online/dns-query"
+    - "tls://1.1.1.1:853"
+    - "https://dns.google/dns-query"
+    - "tls://8.8.8.8:853"
   fallback:
-    - "tls://dns.adguard-dns.com:853"      # AdGuard (مسدودسازی تبلیغات)
-    - "tls://1.0.0.1:853"                  # Cloudflare Secondary
+    - "tls://dns.adguard-dns.com:853"
+    - "tls://1.0.0.1:853"
     - "https://doh.opendns.com/dns-query"
   fallback-filter:
     geoip: true
     geoip-code: IR
     ipcidr:
-      - 2.16.0.0/15              # بازه IP متعلق به WhatsApp در اروپا
+      - 2.16.0.0/15
     domain:
-      - "+.ir"                   # تمام دامنه‌های .ir از DNS اولیه استفاده کنند
+      - "+.ir"
 
-# LAYER 3: DYNAMIC PROXY GROUPS (Smart Routing)
-# استراتژی: انتخاب خودکار سریع‌ترین پروکسی و داشتن یک گروه پشتیبان برای مواقع قطعی کامل
-proxy-groups:
-  - name: "✅ PROXY"
-    type: url-test
-    url: "http://cp.cloudflare.com/generate_204" # URL استاندارد و سبک برای تست سرعت و پایداری
-    interval: 300
-    tolerance: 50
-    proxies:
-      - "🚀 REALITY-Prime"
-      - "🚀 TROJAN-Stealth"
-      - "🚀 VMESS-WS"
-      - "🚀 HY2-UDP-Storm"
-      - "🚨 EMERGENCY-VMESS"
-
-  - name: "🔁 FAILOVER"
-    type: fallback
-    url: "http://www.bing.com"
-    interval: 120
-    proxies:
-      - "✅ PROXY"
-      - DIRECT # اگر هیچ پروکسی کار نکرد، به اینترنت مستقیم وصل شو (برای دسترسی به سایت‌های داخلی)
-
-# LAYER 4: PRECISION RULES (Traffic Control)
-# استراتژی: قوانین دقیق برای هدایت ترافیک، مسدودسازی جاسوس‌افزارها و بهینه‌سازی دسترسی
 rules:
-  # Block Trackers, Ads & Malware
   - DOMAIN-KEYWORD,ad,REJECT
   - DOMAIN-SUFFIX,googletagmanager.com,REJECT
   - DOMAIN-KEYWORD,snitch,REJECT
   - DOMAIN-SUFFIX,ircert.ir,REJECT
   - DOMAIN-SUFFIX,filter,REJECT
-
-  # Direct Iranian Services
   - DOMAIN-SUFFIX,ir,DIRECT
   - DOMAIN-KEYWORD,snapp,DIRECT
   - DOMAIN-KEYWORD,digikala,DIRECT
   - GEOIP,IR,DIRECT
+  - PROCESS-NAME,telegram.exe,PROXY-CHAIN
+  - DOMAIN-KEYWORD,telegram,PROXY-CHAIN
+  - DOMAIN-SUFFIX,whatsapp.net,PROXY-CHAIN
+  - GEOIP,CN,PROXY-CHAIN
+  - MATCH,PROXY-CHAIN
 
-  # Proxy Specific Apps (Example for Desktop)
-  - PROCESS-NAME,telegram.exe,✅ PROXY
-  - PROCESS-NAME,nekoray.exe,DIRECT # خود برنامه نباید از پروکسی عبور کند
-
-  # International Traffic via Proxy
-  - DOMAIN-SUFFIX,googleapis.cn,✅ PROXY # ترافیک گوگل که از چین عبور می‌کند
-  - DOMAIN-KEYWORD,telegram,✅ PROXY
-  - DOMAIN-SUFFIX,whatsapp.net,✅ PROXY
-  - GEOIP,CN,✅ PROXY
-
-  # Final Rule
-  - MATCH,✅ PROXY # نسخه بهینه شده: به جای Failover، مستقیما از گروه اصلی استفاده می‌کنیم. Failover در سطح خود گروه مدیریت می‌شود.
-
-# LAYER 5: KERNEL-LEVEL OPTIMIZATION (TUN Interface)
 tun:
   enable: true
-  stack: system # پایدارتر از gvisor در اکثر پلتفرم‌ها
+  stack: system
   dns-hijack: ["any:53"]
-  mtu: 1420 # مقداری بهینه برای اکثر شبکه‌های موبایل ایران
+  mtu: 1420
   auto-route: true
   auto-detect-interface: true
 
-# LAYER 6: ADVANCED ANTI-DPI TECHNIQUES
 experimental:
   tcp-fast-open: true
-  udp-fragment: true # برای شکستن بسته‌های UDP و دشوار کردن شناسایی
+  udp-fragment: true
   sniff-tls-sni: true
+  probe-resistance: true
+
+# اسکریپت و README نهایی را نیز به همین سبک با قابلیت ارسال alert و پشتیبانی از پایش (log/alert) ارتقا بده.
