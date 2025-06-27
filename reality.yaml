@@ -1,54 +1,26 @@
-dns:
-  enable: true
-  enhanced-mode: redir-host
-  nameserver:
-    - https://1.1.1.1/dns-query  # تغییر به آدرس استاندارد
-    - https://dns.adguard.com/dns-query  # افزودن DNS جدید
-    - https://dns11.quad9.net/dns-query  # افزودن DNS امن
-  fallback:
-    - tls://8.8.4.4:853  # استفاده از TLS
-    - https://doh.opendns.com/dns-query  # افزودن fallback جدید
-    - tls://dns-unfiltered.adguard.com:853  # DNS بدون فیلتر
-  fallback-filter:
-    geoip: true
-    geoip-code: IR
-    ipcidr:
-      - 0.0.0.0/8
-      - 10.0.0.0/8
-      - 127.0.0.0/8
-  disableCache: true  # غیرفعال‌سازی کش برای جلوگیری از نشت
-  queryStrategy: UseIPv4  # تغییر به فرمت استاندارد
-
 proxies:
   - name: "Reality-Telegram-MCI"
     type: vless
-    server: www.digitalocean.com  # تغییر سرور به منبع معتبرتر
+    server: www.digitalocean.com
     port: 443
     uuid: de305d54-75b4-431b-adb2-eb6b9e546013
     flow: xtls-rprx-vision
     tls: true
-    servername: cdn.telegram-cdn.org  # تغییر از sni به servername
-    reality-opts:
-      public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-      short-id: "mci1"  # تغییر به فرمت کوتاه‌تر
-    udp: true  # فعال‌سازی UDP
-    client-fingerprint: chrome  # جایگزین fingerprint قدیمی
+    servername: cdn.telegram-cdn.org
+    client-fingerprint: chrome
+    udp: true
 
   - name: "Reality-TikTok-Irancell"
     type: vless
-    server: www.github.com  # تغییر سرور
+    server: www.github.com
     port: 443
     uuid: de305d54-75b4-431b-adb2-eb6b9e546013
     flow: xtls-rprx-vision
     tls: true
     servername: api16-normal-c-useast1a.tiktokv.com
-    reality-opts:
-      public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-      short-id: "irn2"
-    udp: true
     client-fingerprint: chrome
+    udp: true
 
-  # افزودن پروکسی سوم برای افزونگی
   - name: "Reality-CDN-MTN"
     type: vless
     server: www.cloudflare.com
@@ -56,35 +28,6 @@ proxies:
     uuid: de305d54-75b4-431b-adb2-eb6b9e546013
     flow: xtls-rprx-vision
     tls: true
-    servername: www.microsoft.com  # SNI جدید
-    reality-opts:
-      public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-      short-id: "mtn3"
-    udp: true
+    servername: www.microsoft.com
     client-fingerprint: chrome
-
-proxy-groups:
-  - name: "Reality-Auto"
-    type: url-test  # تغییر به تست خودکار
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    proxies:
-      - Reality-Telegram-MCI
-      - Reality-TikTok-Irancell
-      - Reality-CDN-MTN
-
-  # افزودن گروه جدید برای مدیریت بهتر
-  - name: "IR-Bypass"
-    type: select
-    proxies:
-      - DIRECT
-      - Reality-Auto
-
-rules:
-  - DOMAIN-SUFFIX,ir,DIRECT  # ترافیک داخلی مستقیم
-  - GEOIP,ir,DIRECT,no-resolve  # IPهای ایرانی مستقیم
-  - DOMAIN-KEYWORD,telegram,Reality-Auto
-  - DOMAIN-KEYWORD,tiktok,Reality-Auto
-  - DOMAIN-SUFFIX,apple.com,Reality-Auto
-  - DOMAIN-SUFFIX,google.com,Reality-Auto
-  - MATCH,IR-Bypass  # خط آخر
+    udp: true
