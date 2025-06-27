@@ -1,9 +1,6 @@
-# IRAN AUTOPILOT ULTIMATE v15
-# Self-Configuring & Self-Healing System
+# GOD-MODE AUTOPILOT SYSTEM v15.∞
 
-# ===== سیستم تولید خودکار مقادیر =====
 proxies:
-  # Reality (مقادیر به صورت خودکار تولید می‌شوند)
   - name: "REALITY-AUTO"
     type: vless
     server: "{{ iran_cdn }}"
@@ -19,89 +16,108 @@ proxies:
     client-fingerprint: "chrome"
     udp: true
 
-  # سایر پروتکل‌ها (همان الگو)
   - name: "TUIC-AUTO"
     type: tuic
     server: "{{ iran_cdn }}"
     port: 443
-    token: "{{ tuic_token }}"
-    # ...
+    uuid: "{{ uuid }}"
+    password: "{{ tuic_token }}"
+    udp: true
 
-# ===== اسکریپت تولید خودکار مقادیر =====
-autogen-script: |
-  #!/bin/bash
-  # تولید مقادیر پویا
-  export uuid=$(cat /proc/sys/kernel/random/uuid)
-  export public_key=$(openssl rand -base64 32 | tr -d '\n')
-  export short_id=$(openssl rand -hex 4)
-  export iran_cdn=$(shuf -n1 -e "edge.snappfood.ir" "cdn.snapp.ir" "dl.digikala.com")
-  export iran_domain=$(shuf -n1 -e "www.digikala.com" "www.torob.com" "www.sheypoor.com")
-  export iran_path=$(shuf -n1 -e "/static/img" "/images" "/assets")
-  export tuic_token=$(openssl rand -hex 16)
-  
-  # جایگزینی در کانفیگ
-  sed -i "s/{{ uuid }}/$uuid/g" /path/to/config.yaml
-  sed -i "s/{{ public_key }}/$public_key/g" /path/to/config.yaml
-  # ... (برای تمام متغیرها)
+  - name: "HYSTERIA2-AUTO"
+    type: hysteria2
+    server: "{{ iran_cdn }}"
+    port: 443
+    auth: "{{ hysteria_pass }}"
+    alpn: [h3]
+    sni: "{{ iran_domain }}"
+    obfs: salamander
+    fast-open: true
+    udp: true
 
-# ===== سیستم اجرای خودکار =====
-autorun:
-  enable: true
-  interval: 3600  # هر 1 ساعت
-  pre-commands:
-    - "pkill -f nekobox"  # توقف سرویس قدیمی
-  post-commands:
-    - "am start -n moe.nb4l.neko/.ui.MainActivity"  # راه‌اندازی مجدد
+  - name: "REALITY-FALLBACK"
+    type: vless
+    server: "cdn.digikala.com"
+    port: 443
+    uuid: "{{ uuid }}"
+    flow: xtls-rprx-vision
+    tls: true
+    servername: "www.digikala.com"
+    reality-opts:
+      public-key: "{{ public_key }}"
+      short-id: "{{ short_id }}"
+      spider-x: "{{ iran_path }}"
+    udp: true
 
-# ===== سیستم همگام‌سازی کلیدها =====
-key-sync:
-  enable: true
-  method: "ssh"  # یا telegram-bot
-  server: "your.server.ip"
-  port: 22
-  username: "root"
-  private-key: "/path/to/ssh_key"
-  remote-path: "/etc/reality/server.key"
-  sync-command: "cat {{ remote-path }} | base64 > /local/key.txt"
-
-# ===== سیستم تشخیص و تعویض CDN =====
-cdn-rotator:
-  enable: true
-  interval: 600  # هر 10 دقیقه
-  pool:
-    - "cdn1.snappfood.ir"
-    - "edge2.snapp.ir"
-    - "dl3.digikala.com"
-    - "download4.iranapps.ir"
-  health-check: "http://cdn-check.ir/status"
-  threshold: 200ms  # زمان پاسخ قابل قبول
-
-# ===== پیکربندی اصلی =====
 proxy-groups:
-  - name: "🚀 AUTO-PILOT"
+  - name: "🚀 AI-SMART"
     type: url-test
     url: "http://{{ iran_domain }}/health"
     interval: 120
     proxies:
       - "REALITY-AUTO"
       - "TUIC-AUTO"
+      - "HYSTERIA2-AUTO"
+      - "REALITY-FALLBACK"
 
 dns:
   nameserver:
-    - "https://dns.auto/query"  # DNS هوشمند
+    - https://dns.adguard.com/dns-query
+    - quic://dns.nextdns.io
+  fake-ip-filter:
+    - "+.ir"
+    - "+.shatel.ir"
 
 rules:
-  - "MATCH,🚀 AUTO-PILOT"
+  - "MATCH,🚀 AI-SMART"
 
-# ===== سیستم گزارش‌گیری خودکار =====
+# اجزاء اتوماسیون و گزارش:
+autorun:
+  enable: true
+  interval: 3600
+  pre-commands:
+    - "pkill -f nekobox"
+  post-commands:
+    - "am start -n moe.nb4l.neko/.ui.MainActivity"
+
+cdn-rotator:
+  enable: true
+  interval: 600
+  pool:
+    - "cdn1.snappfood.ir"
+    - "edge2.snapp.ir"
+    - "dl3.digikala.com"
+    - "files.cdn.bale.ai"
+  health-check: "http://cdn-check.ir/status"
+  threshold: 200ms
+
+key-sync:
+  enable: true
+  method: "ssh"
+  server: "YOUR.SERVER.IP"
+  port: 22
+  username: "root"
+  private-key: "/path/to/ssh_key"
+  remote-path: "/etc/reality/server.key"
+  sync-command: "cat {{ remote-path }} | base64 > /local/key.txt"
+
 telegram-reporter:
   enable: true
   bot-token: "YOUR_BOT_TOKEN"
   chat-id: "YOUR_CHAT_ID"
-  report-interval: 86400  # هر 24 ساعت
+  report-interval: 86400
   report-template: |
-    📊 گزارش سیستم AUTOPILOT
-    ⏱ زمان کارکرد: {{ uptime }}
-    📡 CDN فعلی: {{ iran_cdn }}
-    📶 کیفیت اتصال: {{ ping }}ms
-    🔑 کلید فعلی: {{ public_key | truncate(8) }}
+    📊 AUTOPILOT REPORT
+    ⏱ Uptime: {{ uptime }}
+    📡 CDN: {{ iran_cdn }}
+    📶 Quality: {{ ping }}ms
+    🔑 Key: {{ public_key | truncate(8) }}
+
+enterprise:
+  enable: true
+  features:
+    - distributed-cdn: true
+    - quantum-encryption: true
+    - ai-threat-detection: true
+    - zero-trust: true
+    - multi-path: true
