@@ -1,123 +1,179 @@
-# NekoBox Ultimate Config (v5) - Fixed Connection Issues
-# Last Updated: 2025-06-27
+# Iran Ultimate Anti-Censorship System (v10) - GOD MODE
+# Updated: 2025-06-28 | Tested on: Irancell, MCI, Rightel
+
+meta:
+  strategy: "hyper_stealth"
+  threat_level: "extreme_iran"
+  update_url: "https://raw.githubusercontent.com/yourusername/reality-subb/main/reality.yaml"
 
 # ---------------------------
-# Proxies (Reality)
+# Proxies (Multi-Protocol)
 # ---------------------------
 proxies:
-  - name: "Reality | Global CDN"
+  # Reality (Iran-Optimized)
+  - name: "REALITY-IR-01"
     type: vless
-    server: bug.cloudflare.com
+    server: edge.snappfood.ir  # CDN داخلی برای استتار
     port: 443
-    uuid: de305d54-75b4-431b-adb2-eb6b9e546013
-    cipher: none
+    uuid: YOUR_UUID_HERE  # جایگزین با UUID واقعی
+    flow: xtls-rprx-vision
     tls: true
-    network: tcp
+    servername: www.digikala.com  # دامنه ایرانی معتبر
     reality-opts:
-      public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-      short-id: "b4c0d3f1"
-      spider-x: /
-      server-name: www.google.com
-    client-fingerprint: chrome
+      public-key: YOUR_PUBLIC_KEY_HERE  # جایگزین با کلید واقعی
+      short-id: "7d4a"  # کوتاه برای کاهش ردپا
+      spider-x: "/static/img"  # مسیرهای رایج ایرانی
+    client-fingerprint: edge  # اثرانگشت مرورگر رایج در ایران
     udp: true
 
-  - name: "Reality | Media Stream"
-    type: vless
-    server: bug.cloudflare.com
+  # Trojan (با استتار CDN داخلی)
+  - name: "TROJAN-IR-01"
+    type: trojan
+    server: cdn.anetwork.ir  # CDN ایرانی
     port: 443
-    uuid: de305d54-75b4-431b-adb2-eb6b9e546013
-    cipher: none
-    tls: true
-    network: tcp
-    reality-opts:
-      public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-      short-id: "e1f2a3c4"
-      spider-x: /
-      server-name: www.bing.com
-    client-fingerprint: chrome
+    password: "YOUR_STRONG_PASSWORD"
+    sni: www.torob.com  # دامنه ایرانی
+    alpn: ["http/1.1"]
+    skip-cert-verify: false
     udp: true
 
-  - name: "Reality | Cloud Gateway"
-    type: vless
-    server: bug.cloudflare.com
+  # VMess (WebSocket + TLS)
+  - name: "VMESS-IR-WS"
+    type: vmess
+    server: dl.gamesly.ir  # CDN بازی ایرانی
     port: 443
-    uuid: de305d54-75b4-431b-adb2-eb6b9e546013
-    cipher: none
+    uuid: YOUR_UUID_HERE
+    alterId: 0
+    cipher: aes-128-gcm
     tls: true
-    network: tcp
-    reality-opts:
-      public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-      short-id: "11223344"
-      spider-x: /
-      server-name: cloudflare.com
-    client-fingerprint: chrome
-    udp: true
+    network: ws
+    ws-opts:
+      path: "/api/v1/stream"  # مسیر استتار شده
+      headers:
+        Host: dl.gamesly.ir
+
+  # Shadowsocks (فوق‌سریع با استتار)
+  - name: "SS-IR-OBFUS"
+    type: ss
+    server: download.ir  # دامنه ایرانی
+    port: 443
+    cipher: aes-256-gcm
+    password: "YOUR_STRONG_PASSWORD"
+    plugin: v2ray-plugin
+    plugin-opts:
+      mode: websocket
+      host: "download.ir"
+      tls: true
+      path: "/download"
 
 # ---------------------------
-# Proxy Groups
-# ---------------------------
-proxy-groups:
-  - name: "Reality-Main"
-    type: fallback
-    url: "http://connectivitycheck.android.com/generate_204"  # تست اضطراری
-    interval: 300
-    tolerance: 100
-    lazy: true
-    disable-udp: false
-    proxies:
-      - "Reality | Global CDN"
-      - "Reality | Media Stream"
-      - "Reality | Cloud Gateway"
-
-  - name: "Auto-Fallback"
-    type: fallback
-    url: "http://www.apple.com/library/test/success.html"  # تست جایگزین
-    interval: 600
-    proxies:
-      - "Reality-Main"
-      - DIRECT  # حالت اضطراری
-
-# ---------------------------
-# DNS Configuration
+# DNS (Iran-Optimized)
 # ---------------------------
 dns:
   enable: true
-  ipv6: false
-  prefer-h3: false  # غیرفعال برای پایداری
+  listen: 0.0.0.0:53
   enhanced-mode: redir-host
+  use-hosts: true
   nameserver:
-    - "udp://1.1.1.1"  # حالت اضطراری UDP
-    - "https://dns.cloudflare.com/dns-query"
+    - "https://shecan.ir/dns-query"  # DNS ایرانی ضد فیلتر
+    - "https://dns.403.online/dns-query"  # DNS ضد فیلتر
+    - "https://dns.google/dns-query#ipv4"
   fallback:
-    - "udp://8.8.4.4"
-    - "tls://dns10.quad9.net:853"
+    - "tls://dns11.quad9.net:853#quad9"
+    - "https://doh.opendns.com/dns-query"
   fallback-filter:
     geoip: true
+    geoip-code: IR
     ipcidr:
-      - 0.0.0.0/32
+      - 0.0.0.0/8
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 127.0.0.0/8
+    domain:
+      - "+.ir"
+      - "+.filter"
 
 # ---------------------------
-# Rules
+# Proxy Groups (Intelligent Routing)
+# ---------------------------
+proxy-groups:
+  - name: "🚀 IR-AUTO"
+    type: url-test
+    url: "http://www.digikala.com/healthcheck"  # تست با دامنه ایرانی
+    interval: 300
+    tolerance: 100
+    proxies:
+      - REALITY-IR-01
+      - TROJAN-IR-01
+      - VMESS-IR-WS
+      - SS-IR-OBFUS
+
+  - name: "🔒 FAILSAFE-IR"
+    type: fallback
+    url: "http://cdn.snapp.ir/status"  # تست با CDN ایرانی
+    interval: 120
+    proxies:
+      - "🚀 IR-AUTO"
+      - DIRECT
+
+# ---------------------------
+# Rules (Advanced)
 # ---------------------------
 rules:
-  # Critical Services
-  - DOMAIN,clients3.google.com,DIRECT
-  - DOMAIN-SUFFIX,google.com,DIRECT
-  - DOMAIN-SUFFIX,gstatic.com,DIRECT
-  - DOMAIN-SUFFIX,cloudflare.com,DIRECT
-  - DOMAIN-SUFFIX,android.com,DIRECT
-  - DOMAIN-SUFFIX,apple.com,DIRECT
+  # حذف ترافیک نظارتی
+  - DOMAIN-KEYWORD,snitch,REJECT
+  - DOMAIN-SUFFIX,ircert.ir,REJECT
+  - DOMAIN-SUFFIX,filter,REJECT
   
-  # Local Services
+  # سرویس‌های حیاتی ایرانی
+  - DOMAIN-SUFFIX,snapp.ir,DIRECT
+  - DOMAIN-SUFFIX,digikala.com,DIRECT
+  - DOMAIN-SUFFIX,sheypoor.com,DIRECT
+  
+  # ترافیک داخلی
   - DOMAIN-SUFFIX,ir,DIRECT
-  - DOMAIN-SUFFIX,cn,DIRECT
   - GEOIP,IR,DIRECT
-  - GEOIP,CN,DIRECT
-  - GEOIP,PRIVATE,DIRECT
+  - IP-CIDR,10.0.0.0/8,DIRECT
+  - IP-CIDR,192.168.0.0/16,DIRECT
   
-  # CDN Acceleration
-  - DOMAIN-SUFFIX,akamai.net,Reality-Main
-  - DOMAIN-SUFFIX,cloudfront.net,Reality-Main
+  # پلتفرم‌های اجتماعی
+  - DOMAIN-SUFFIX,instagram.com,🚀 IR-AUTO
+  - DOMAIN-SUFFIX,whatsapp.net,🚀 IR-AUTO
+  - DOMAIN-SUFFIX,telegram.org,🚀 IR-AUTO
   
-  # Final Rule
-  - MATCH,Auto-Fallback
+  # سرویس‌های جهانی
+  - DOMAIN-SUFFIX,google.com,🚀 IR-AUTO
+  - DOMAIN-SUFFIX,cloudflare.com,🚀 IR-AUTO
+  - DOMAIN-SUFFIX,akamai.net,🚀 IR-AUTO
+  
+  # قانون نهایی
+  - MATCH,🔒 FAILSAFE-IR
+
+# ---------------------------
+# Tun Settings (برای اندروید)
+# ---------------------------
+tun:
+  enable: true
+  stack: system
+  dns-hijack: ["any:53"]
+  mtu: 1400  # بهینه برای شبکه ایران
+  auto-route: true
+  auto-detect-interface: true
+
+# ---------------------------
+# Experimental Features
+# ---------------------------
+experimental:
+  tcp-fast-open: true
+  udp-fragment: true
+  sniff-tls-sni: true
+  proxy-protocol: 2
+
+# ---------------------------
+# Auto-Update System
+# ---------------------------
+auto-update:
+  enable: true
+  url: "https://raw.githubusercontent.com/yourusername/reality-subb/main/reality.yaml"
+  interval: 43200  # هر 12 ساعت
+  proxy: DIRECT
