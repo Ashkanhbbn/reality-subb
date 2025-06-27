@@ -45,7 +45,7 @@ dns:
   nameserver:
     - 8.8.8.8
     - 1.1.1.1
-    - 10.202.10.202        # DNS داخلی ایران برای fallback
+    - 10.202.10.202
     - https://dns.google/dns-query
     - https://cloudflare-dns.com/dns-query
 
