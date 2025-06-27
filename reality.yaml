@@ -1,54 +1,29 @@
-proxies:
-  - name: "VLESS Reality - Telegram"
-    type: vless
-    server: bug.cloudflare.com
-    port: 443
-    uuid: de305d54-75b4-431b-adb2-eb6b9e546013
-    cipher: none
-    tls: true
-    network: tcp
-    reality-opts:
-      public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-      short-id: "11223344"
-      spider-x: /cdn
-      server-name: cdn.telegram-cdn.org
-    client-fingerprint: chrome
+- name: "VLESS Reality - Telegram"
+  type: vless
+  server: bug.cloudflare.com
+  port: 443
+  uuid: de305d54-75b4-431b-adb2-eb6b9e546013
+  cipher: none
+  tls: true
+  network: tcp
+  reality-opts:
+    public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
+    short-id: "a1b2c3d4"
+    spider-x: /cdn
+    server-name: cdn.telegram-cdn.org
+  client-fingerprint: chrome
 
-  - name: "VLESS Reality - Amazon"
-    type: vless
-    server: bug.cloudflare.com
-    port: 443
-    uuid: de305d54-75b4-431b-adb2-eb6b9e546013
-    cipher: none
-    tls: true
-    network: tcp
-    reality-opts:
-      public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-      short-id: "a1b2c3d4"
-      spider-x: /aws
-      server-name: s3.amazonaws.com
-    client-fingerprint: safari
-
-proxy-groups:
-  - name: Auto-Selector
-    type: select
-    proxies:
-      - VLESS Reality - Telegram
-      - VLESS Reality - Amazon
-
-dns:
-  enable: true
-  ipv6: false
-  listen: 0.0.0.0:53
-  enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
-  nameserver:
-    - 8.8.8.8
-    - 1.1.1.1
-    - https://dns.google/dns-query
-    - https://cloudflare-dns.com/dns-query
-
-rules:
-  - DOMAIN-SUFFIX,ir,DIRECT
-  - DOMAIN-SUFFIX,cn,DIRECT
-  - MATCH,Auto-Selector
+- name: "VLESS Reality - Amazon"
+  type: vless
+  server: bug.cloudflare.com
+  port: 443
+  uuid: de305d54-75b4-431b-adb2-eb6b9e546013
+  cipher: none
+  tls: true
+  network: tcp
+  reality-opts:
+    public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
+    short-id: "11223344"
+    spider-x: /aws
+    server-name: s3.amazonaws.com
+  client-fingerprint: safari
