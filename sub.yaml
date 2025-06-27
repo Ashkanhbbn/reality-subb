@@ -1,273 +1,180 @@
-# Iran Hyper-Stealth Config (v12) - GOD MODE
-# Updated: 2025-06-28 | Tested on: Irancell, MCI, Rightel
+#
+# 🛡️ GOD MODE PRO CONFIG (v12.1) - The Unbreakable Iranian Shield 🛡️
+#
+# Author: Gemini Pro-Analysis
+# Philosophy: Chameleon Strategy, Dynamic Resilience, Performance Tuning, Layered Security
+# Last Updated: 2025-06-28
+#
 
 meta:
-  strategy: "quantum_bypass"
-  threat_level: "iran_extreme"
-  update_key: "0xIRANBYPASS2025"
+  name: "🇮🇷 IRAN God Mode Pro"
+  description: "پیکربندی فوق‌پیشرفته برای مقابله با فیلترینگ شدید در ایران. ترکیبی از استتار، سرعت و پایداری."
+  author: "Gemini Pro"
+  update-url: "https://raw.githubusercontent.com/yourusername/reality-subb/main/god-mode-pro.yaml" # لینک به‌روزرسانی خودکار
 
-# لایه ۱: پروتکل‌های ترکیبی (ایران-بهینه‌سازی شده)
+# LAYER 1: PROTOCOL ARMORY (Multi-Spectrum Evasion)
+# استراتژی: استفاده از پروتکل‌های متنوع با استتار روی CDNهای داخلی برای حداکثر مقاومت
 proxies:
-  # Reality (ایران-سازگار)
-  - name: "REALITY-IR-01"
+  # 🥇 Primary: VLESS + Reality + Vision - بهترین گزینه برای پایداری و استتار
+  - name: "🚀 REALITY-Prime"
     type: vless
-    server: edge.snappfood.ir  # CDN داخلی برای استتار
+    server: cdn.digikala.com       # سرور CDN داخلی معتبر با ترافیک بالا
     port: 443
-    uuid: YOUR_UUID_HERE  # جایگزین با UUID واقعی
-    flow: xtls-rprx-vision
+    uuid: "YOUR_UUID_HERE"         # <--- UUID واقعی خود را اینجا وارد کنید
+    network: tcp
     tls: true
-    servername: www.digikala.com  # دامنه ایرانی معتبر
+    servername: www.digikala.com   # دامنه ایرانی معتبر برای SNI
+    flow: xtls-rprx-vision
     reality-opts:
-      public-key: YOUR_PUBLIC_KEY_HERE  # جایگزین با کلید واقعی
-      short-id: "7d4a"  # کوتاه برای کاهش ردپا
-      spider-x: "/static/img"  # مسیرهای رایج ایرانی
-    client-fingerprint: edge  # اثرانگشت مرورگر رایج در ایران
+      public-key: "YOUR_PUBLIC_KEY_HERE" # <--- کلید عمومی واقعی خود را اینجا وارد کنید
+      short-id: "7d4a"             # شناسه کوتاه برای کاهش ردپا
+      spider-x: "/"                # مسیر رندوم برای فریب سیستم‌های تشخیص
+    client-fingerprint: chrome     # اثر انگشت مرورگر رایج
     udp: true
 
-  # Trojan (با استتار CDN داخلی)
-  - name: "TROJAN-IR-01"
+  # 🥈 Secondary: Trojan - سریع و کارآمد با استتار روی CDN
+  - name: "🚀 TROJAN-Stealth"
     type: trojan
-    server: cdn.anetwork.ir  # CDN ایرانی
+    server: edge.snappfood.ir      # استفاده از CDN اسنپ‌فود
     port: 443
-    password: "YOUR_STRONG_PASSWORD"
-    sni: www.torob.com  # دامنه ایرانی
-    alpn: ["http/1.1"]
+    password: "YOUR_STRONG_PASSWORD_HERE" # <--- پسورد قوی خود را اینجا وارد کنید
+    sni: www.snapp.ir              # دامنه معتبر برای SNI
+    alpn: ["h2", "http/1.1"]       # پشتیبانی از پروتکل‌های جدیدتر
     skip-cert-verify: false
     udp: true
 
-  # VMess (WebSocket + TLS)
-  - name: "VMESS-IR-WS"
+  # 🥉 Tertiary: VMess + WebSocket + TLS - سازگاری بالا در شبکه‌های محدود
+  - name: "🚀 VMESS-WS"
     type: vmess
-    server: dl.gamesly.ir  # CDN بازی ایرانی
+    server: dl.gamesly.ir          # CDN بازی (ترافیک معمولاً کمتر بررسی می‌شود)
     port: 443
-    uuid: YOUR_UUID_HERE
+    uuid: "YOUR_UUID_HERE"         # <--- UUID واقعی خود را اینجا وارد کنید
     alterId: 0
-    cipher: aes-128-gcm
+    cipher: auto                   # انتخاب خودکار بهترین رمزنگاری
     tls: true
     network: ws
     ws-opts:
-      path: "/api/v1/stream"  # مسیر استتار شده
+      path: "/v1/updates/check?version=2.5" # مسیر استتار شده شبیه به یک درخواست API
       headers:
         Host: dl.gamesly.ir
+    udp: true
 
-  # Shadowsocks (فوق‌سریع با استتار)
-  - name: "SS-IR-OBFUS"
-    type: ss
-    server: download.ir  # دامنه ایرانی
-    port: 443
-    cipher: aes-256-gcm
-    password: "YOUR_STRONG_PASSWORD"
-    plugin: v2ray-plugin
-    plugin-opts:
-      mode: websocket
-      host: "download.ir"
-      tls: true
-      path: "/download"
-
-  # Hysteria2 (برای شبکه‌های با افت شدید)
-  - name: "HY2-IR-UDP"
+  # 🌪️ Specialty: Hysteria2 - بهترین عملکرد در شبکه‌های با Packet Loss شدید (مخصوصاً اینترنت ماهواره‌ای یا موبایل ضعیف)
+  - name: "🚀 HY2-UDP-Storm"
     type: hysteria2
-    server: game.iranapps.ir  # دامنه اپلیکیشن ایرانی
+    server: app.tapsi.ir           # سرور اپلیکیشن ایرانی
     port: 443
-    password: "YOUR_HYSTERIA_PASSWORD"
-    obfs: salamander
-    obfs-password: "YOUR_OBFS_PASS"
-    sni: dl.iranlms.ir  # استتار آموزش ایرانی
+    password: "YOUR_HYSTERIA_PASSWORD_HERE" # <--- پسورد هیستریا
+    obfs: salamander               # ابفوسکیشن قدرتمند برای UDP
+    obfs-password: "YOUR_OBFS_PASS_HERE" # <--- پسورد ابفوسکیشن
+    sni: api.tapsi.ir              # استتار روی API تپسی
+    udp: true
 
-  # سیستم پشتیبان اضطراری (ایران-ویژه) - اضافه شده در انتهای لیست پروکسی‌ها
-  - name: "🚨 EMERGENCY-IR"
+  # 🚨 FALLBACK: Emergency VMess - یک راه نجات ساده و سریع برای شرایط بحرانی
+  - name: "🚨 EMERGENCY-VMESS"
     type: vmess
-    server: "cdn.jabama.ir"  # CDN جایگزین ایرانی
+    server: "cdn.jabama.ir"
     port: 443
-    uuid: "EMERGENCY_UUID"  # جایگزین با UUID اضطراری
+    uuid: "YOUR_EMERGENCY_UUID_HERE" # <--- UUID اضطراری
     alterId: 0
-    cipher: "none"
+    cipher: "none"                 # برای حداکثر سرعت در شرایط اضطراری (ترافیک همچنان با TLS امن است)
     tls: true
-    network: "tcp"
+    network: ws
     ws-opts:
       path: "/"
       headers:
-        Host: "jabama.ir"
-    client-fingerprint: "edge"
-    reality-opts:  # اگر از Reality استفاده می‌کنید، این بخش را فعال کنید
-      public-key: "EMERGENCY_PUB_KEY"  # کلید عمومی اضطراری
-      short-id: "8c5d"
-      spider-x: "/images"
+        Host: "www.jabama.ir"
+    client-fingerprint: "firefox"
+    udp: true
 
-# لایه ۲: DNS پویا (ایران-بهینه)
+# LAYER 2: INTELLIGENT DNS (Anti-Poisoning System)
+# استراتژی: تفکیک هوشمند DNS برای دسترسی بدون اختلال به سرویس‌های داخلی و خارجی
 dns:
   enable: true
   listen: 0.0.0.0:5353
-  enhanced-mode: redir-host
+  enhanced-mode: redir-host        # حالت بهینه برای TUN Mode
   fake-ip-range: 198.18.0.1/16
   use-hosts: true
   nameserver:
-    - "https://shecan.ir/dns-query"  # DNS ایرانی ضد فیلتر
-    - "https://dns.403.online/dns-query"  # DNS ضد فیلتر
-    - "https://dns.google/dns-query#ipv4"
+    - "https://dns.shecan.ir/dns-query"     # DNS ایرانی ضدتحریم (برای سایت‌های ایرانی)
+    - "https://dns.403.online/dns-query"   # DNS ایرانی ضدتحریم جایگزین
+    - "tls://1.1.1.1:853"                  # Cloudflare DNS over TLS
+    - "https://dns.google/dns-query"       # Google DNS over HTTPS
   fallback:
-    - "tls://dns11.quad9.net:853"
-    - "https://doh.opendns.com/dns-query?dns=QlVBTg"
+    - "tls://dns.adguard-dns.com:853"      # AdGuard (مسدودسازی تبلیغات)
+    - "tls://1.0.0.1:853"                  # Cloudflare Secondary
+    - "https://doh.opendns.com/dns-query"
   fallback-filter:
     geoip: true
     geoip-code: IR
     ipcidr:
-      - 0.0.0.0/8
-      - 10.0.0.0/8
-      - 172.16.0.0/12
-      - 127.0.0.0/8
+      - 2.16.0.0/15              # بازه IP متعلق به WhatsApp در اروپا
     domain:
-      - "+.ir"
-      - "+.filter"
+      - "+.ir"                   # تمام دامنه‌های .ir از DNS اولیه استفاده کنند
 
-# لایه ۳: گروه‌های هوشمند (مسیریابی پیشرفته)
+# LAYER 3: DYNAMIC PROXY GROUPS (Smart Routing)
+# استراتژی: انتخاب خودکار سریع‌ترین پروکسی و داشتن یک گروه پشتیبان برای مواقع قطعی کامل
 proxy-groups:
-  - name: "🚀 IR-AUTO"
+  - name: "✅ PROXY"
     type: url-test
-    url: "http://www.digikala.com/healthcheck"  # تست با دامنه ایرانی
+    url: "http://cp.cloudflare.com/generate_204" # URL استاندارد و سبک برای تست سرعت و پایداری
     interval: 300
-    tolerance: 100
+    tolerance: 50
     proxies:
-      - REALITY-IR-01
-      - TROJAN-IR-01
-      - VMESS-IR-WS
-      - SS-IR-OBFUS
-      - HY2-IR-UDP
-      - "🚨 EMERGENCY-IR"  # اضافه کردن پروکسی اضطراری به گروه
+      - "🚀 REALITY-Prime"
+      - "🚀 TROJAN-Stealth"
+      - "🚀 VMESS-WS"
+      - "🚀 HY2-UDP-Storm"
+      - "🚨 EMERGENCY-VMESS"
 
-  - name: "🔒 FAILSAFE-IR"
+  - name: "🔁 FAILOVER"
     type: fallback
-    url: "http://cdn.snapp.ir/status"  # تست با CDN ایرانی
+    url: "http://www.bing.com"
     interval: 120
     proxies:
-      - "🚀 IR-AUTO"
-      - DIRECT
+      - "✅ PROXY"
+      - DIRECT # اگر هیچ پروکسی کار نکرد، به اینترنت مستقیم وصل شو (برای دسترسی به سایت‌های داخلی)
 
-# لایه ۴: قوانین هوشمند (ایران-ویژه)
+# LAYER 4: PRECISION RULES (Traffic Control)
+# استراتژی: قوانین دقیق برای هدایت ترافیک، مسدودسازی جاسوس‌افزارها و بهینه‌سازی دسترسی
 rules:
-  # حذف ترافیک نظارتی
+  # Block Trackers, Ads & Malware
+  - DOMAIN-KEYWORD,ad,REJECT
+  - DOMAIN-SUFFIX,googletagmanager.com,REJECT
   - DOMAIN-KEYWORD,snitch,REJECT
   - DOMAIN-SUFFIX,ircert.ir,REJECT
   - DOMAIN-SUFFIX,filter,REJECT
-  
-  # سرویس‌های حیاتی ایرانی
-  - DOMAIN-SUFFIX,snapp.ir,DIRECT
-  - DOMAIN-SUFFIX,digikala.com,DIRECT
-  - DOMAIN-SUFFIX,sheypoor.com,DIRECT
-  
-  # ترافیک داخلی
-  - DOMAIN-SUFFIX,ir,DIRECT
-  - GEOIP,IR,DIRECT
-  - IP-CIDR,10.0.0.0/8,DIRECT
-  - IP-CIDR,192.168.0.0/16,DIRECT
-  
-  # پلتفرم‌های اجتماعی
-  - DOMAIN-SUFFIX,instagram.com,🚀 IR-AUTO
-  - DOMAIN-SUFFIX,whatsapp.net,🚀 IR-AUTO
-  - DOMAIN-SUFFIX,telegram.org,🚀 IR-AUTO
-  
-  # سرویس‌های جهانی
-  - DOMAIN-SUFFIX,google.com,🚀 IR-AUTO
-  - DOMAIN-SUFFIX,cloudflare.com,🚀 IR-AUTO
-  - DOMAIN-SUFFIX,akamai.net,🚀 IR-AUTO
-  
-  # قانون نهایی
-  - MATCH,🔒 FAILSAFE-IR
 
-# لایه ۵: بهینه‌سازی شبکه (ایران-ویژه)
+  # Direct Iranian Services
+  - DOMAIN-SUFFIX,ir,DIRECT
+  - DOMAIN-KEYWORD,snapp,DIRECT
+  - DOMAIN-KEYWORD,digikala,DIRECT
+  - GEOIP,IR,DIRECT
+
+  # Proxy Specific Apps (Example for Desktop)
+  - PROCESS-NAME,telegram.exe,✅ PROXY
+  - PROCESS-NAME,nekoray.exe,DIRECT # خود برنامه نباید از پروکسی عبور کند
+
+  # International Traffic via Proxy
+  - DOMAIN-SUFFIX,googleapis.cn,✅ PROXY # ترافیک گوگل که از چین عبور می‌کند
+  - DOMAIN-KEYWORD,telegram,✅ PROXY
+  - DOMAIN-SUFFIX,whatsapp.net,✅ PROXY
+  - GEOIP,CN,✅ PROXY
+
+  # Final Rule
+  - MATCH,✅ PROXY # نسخه بهینه شده: به جای Failover، مستقیما از گروه اصلی استفاده می‌کنیم. Failover در سطح خود گروه مدیریت می‌شود.
+
+# LAYER 5: KERNEL-LEVEL OPTIMIZATION (TUN Interface)
 tun:
   enable: true
-  stack: system
+  stack: system # پایدارتر از gvisor در اکثر پلتفرم‌ها
   dns-hijack: ["any:53"]
-  mtu: 1400  # بهینه برای شبکه ایران
+  mtu: 1420 # مقداری بهینه برای اکثر شبکه‌های موبایل ایران
   auto-route: true
   auto-detect-interface: true
 
-# لایه ۶: تکنیک‌های ضد DPI (پیشرفته)
+# LAYER 6: ADVANCED ANTI-DPI TECHNIQUES
 experimental:
   tcp-fast-open: true
-  udp-fragment: true
+  udp-fragment: true # برای شکستن بسته‌های UDP و دشوار کردن شناسایی
   sniff-tls-sni: true
-  proxy-protocol: 2
-  tcp-keep-alive-interval: 10
-
-# لایه ۷: سیستم به‌روزرسانی خودکار
-auto-update:
-  enable: true
-  url: "https://raw.githubusercontent.com/yourusername/reality-subb/main/reality.yaml"
-  interval: 21600  # هر ۶ ساعت
-  proxy: DIRECT
-
-# لایه ۸: مکانیزم چرخشی (ضد بلوکه شدن)
-rotation:
-  enable: true
-  interval: 3600  # تغییر پیکربندی هر ۱ ساعت
-  strategy: "domain-shuffle"
-  pool:
-    - "www.alibaba.ir"
-    - "cdn.snapp.ir"
-    - "dl.digikala.com"
-
-# لایه ۹: سیستم هشدار امنیتی
-security-alerts:
-  enable: true
-  webhook: "https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage"
-  threshold: 3
-
-# لایه ۱۰: اسکریپت تقویت‌کننده (برای دستگاه‌های روت شده)
-boost-script: |
-  #!/system/bin/sh
-  # Iran Network Turbo Boost Script
-  # Usage: sh iran_boost.sh
-
-  # پاک‌سازی قوانین فایروال
-  iptables -F
-  iptables -t nat -F
-  iptables -t mangle -F
-  ip6tables -F
-  ip6tables -t nat -F
-
-  # بهینه‌سازی پارامترهای شبکه
-  sysctl -w net.ipv4.tcp_fastopen=3
-  sysctl -w net.ipv4.tcp_window_scaling=1
-  sysctl -w net.ipv4.tcp_tw_reuse=1
-  sysctl -w net.ipv4.tcp_sack=1
-  sysctl -w net.core.rmem_max=2500000
-  sysctl -w net.core.wmem_max=2500000
-  sysctl -w net.core.netdev_max_backlog=10000
-  sysctl -w net.ipv4.tcp_max_syn_backlog=30000
-
-  # غیرفعال‌سازی IPv6 (موقت)
-  for i in $(ip -o link show | awk -F': ' '{print $2}'); do
-    sysctl -w net.ipv6.conf.$i.disable_ipv6=1
-  done
-
-  # افزایش اولویت ترافیک VPN
-  tc qdisc add dev tun0 root sfq perturb 10
-  tc qdisc add dev wlan0 root sfq
-
-  # فعال‌سازی TCP BBR (اگر پشتیبانی شود)
-  if grep -q "bbr" /proc/sys/net/ipv4/tcp_available_congestion_control; then
-    echo "bbr" > /proc/sys/net/ipv4/tcp_congestion_control
-  fi
-
-  # جلوگیری از کاهش سرعت VPN
-  echo "0" > /proc/sys/net/ipv4/tcp_slow_start_after_idle
-
-  # کاهش زمان‌های نگه‌داری TCP
-  echo "30" > /proc/sys/net/ipv4/tcp_fin_timeout
-  echo "5" > /proc/sys/net/ipv4/tcp_keepalive_probes
-  echo "15" > /proc/sys/net/ipv4/tcp_keepalive_intvl
-
-  # فعال‌سازی MTU Probe
-  echo "1" > /proc/sys/net/ipv4/tcp_mtu_probing
-
-  # بهینه‌سازی برای شبکه‌های با تاخیر بالا
-  echo "1" > /proc/sys/net/ipv4/tcp_low_latency
-
-  # اعمال تنظیمات DNS اضطراری
-  setprop net.dns1 1.1.1.1
-  setprop net.dns2 8.8.8.8
-
-  # ثبت رویداد
-  echo "[$(date)] Boost applied" > /data/local/tmp/iran_boost.log
