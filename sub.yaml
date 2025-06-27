@@ -1,7 +1,11 @@
-# NekoBox - Fixed Reality Config (v3)
+# NekoBox Ultimate Reality Config (v4)
+# Optimized for Stability & Bypass
 
+# ---------------------------
+# Proxies (Reality)
+# ---------------------------
 proxies:
-  - name: "Reality | CDN Global"
+  - name: "Reality | Global CDN"
     type: vless
     server: bug.cloudflare.com
     port: 443
@@ -15,8 +19,9 @@ proxies:
       spider-x: /
       server-name: www.google.com
     client-fingerprint: chrome
+    udp: true
 
-  - name: "Reality | Media Global"
+  - name: "Reality | Media Stream"
     type: vless
     server: bug.cloudflare.com
     port: 443
@@ -30,8 +35,9 @@ proxies:
       spider-x: /
       server-name: www.bing.com
     client-fingerprint: chrome
+    udp: true
 
-  - name: "Reality | Cloud Global"
+  - name: "Reality | Cloud Gateway"
     type: vless
     server: bug.cloudflare.com
     port: 443
@@ -45,44 +51,80 @@ proxies:
       spider-x: /
       server-name: cloudflare.com
     client-fingerprint: chrome
+    udp: true
 
+# ---------------------------
+# Proxy Groups
+# ---------------------------
 proxy-groups:
-  - name: Reality-GOD
+  - name: "Reality-Main"
     type: fallback
-    url: http://cp.cloudflare.com/generate_204  # تست مستقیم Cloudflare
+    url: "http://www.gstatic.com/generate_204"
     interval: 300
+    tolerance: 100
+    lazy: true
+    disable-udp: false
     proxies:
-      - Reality | CDN Global
-      - Reality | Media Global
-      - Reality | Cloud Global
+      - "Reality | Global CDN"
+      - "Reality | Media Stream"
+      - "Reality | Cloud Gateway"
 
+  - name: "Auto-Fallback"
+    type: fallback
+    url: "http://connectivitycheck.gstatic.com/generate_204"
+    interval: 600
+    proxies:
+      - "Reality-Main"
+      - DIRECT
+
+# ---------------------------
+# DNS Configuration
+# ---------------------------
 dns:
   enable: true
   ipv6: false
-  enhanced-mode: redir-host  # تغییر مهم: جایگزینی fake-ip
+  prefer-h3: true
+  enhanced-mode: redir-host
   nameserver:
-    - 1.1.1.1  # DNS ساده UDP
-    - 8.8.8.8
-  fallback:  # افزودن Fallback DNS
-    - https://1.1.1.1/dns-query
-    - tls://dns.google:853
+    - "https://1.1.1.1/dns-query#security.cloudflare-dns.com"
+    - "https://dns.google/dns-query#dns.google"
+    - "tls://8.8.4.4:853"
+  fallback:
+    - "https://doh.opendns.com/dns-query"
+    - "tls://dns10.quad9.net:853"
+  fallback-filter:
+    geoip: true
+    ipcidr:
+      - 0.0.0.0/32
 
+# ---------------------------
+# Rules
+# ---------------------------
 rules:
-  # قوانین مستقیم برای سرویس‌های حیاتی
-  - DOMAIN-SUFFIX,ir,DIRECT
-  - DOMAIN-SUFFIX,cn,DIRECT
-  - DOMAIN,clients3.google.com,DIRECT  # رفع خطای گزارش‌شده
+  # Critical Services
+  - DOMAIN,clients3.google.com,DIRECT
   - DOMAIN-SUFFIX,google.com,DIRECT
   - DOMAIN-SUFFIX,gstatic.com,DIRECT
   - DOMAIN-SUFFIX,cloudflare.com,DIRECT
-  
-  # قوانین سیستم‌عامل و اپلیکیشن‌ها
   - DOMAIN-SUFFIX,android.com,DIRECT
-  - DOMAIN-SUFFIX,googleapis.com,DIRECT
+  - DOMAIN-SUFFIX,apple.com,DIRECT
   
-  # قوانین جغرافیایی
+  # Local Services
+  - DOMAIN-SUFFIX,ir,DIRECT
+  - DOMAIN-SUFFIX,cn,DIRECT
   - GEOIP,IR,DIRECT
   - GEOIP,CN,DIRECT
+  - GEOIP,PRIVATE,DIRECT
   
-  # قانون نهایی
-  - MATCH,Reality-GOD
+  # CDN Acceleration
+  - DOMAIN-SUFFIX,akamai.net,Reality-Main
+  - DOMAIN-SUFFIX,cloudfront.net,Reality-Main
+  - DOMAIN-SUFFIX,fastly.net,Reality-Main
+  
+  # Streaming Services
+  - DOMAIN-SUFFIX,netflix.com,Reality-Main
+  - DOMAIN-SUFFIX,disneyplus.com,Reality-Main
+  - DOMAIN-SUFFIX,hulu.com,Reality-Main
+  
+  # Final Rule
+  - MATCH,Auto-Fallback
