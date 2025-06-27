@@ -9,7 +9,7 @@ proxies:
     network: tcp
     reality-opts:
       public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-      short-id: mci01
+      short-id: "11223344"
       spider-x: /cdn
       server-name: cdn.telegram-cdn.org
     client-fingerprint: chrome
@@ -24,37 +24,10 @@ proxies:
     network: tcp
     reality-opts:
       public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-      short-id: irancell02
+      short-id: "a1b2c3d4"
       spider-x: /aws
       server-name: s3.amazonaws.com
     client-fingerprint: safari
-
-  - name: "Hysteria2 - Europe"
-    type: hysteria2
-    server: eu-hysteria.yourdomain.com
-    port: 443
-    password: securepass123
-    obfs: salamander
-    obfs-password: s3cr3t
-    udp: true
-
-  - name: "Hysteria2 - Asia"
-    type: hysteria2
-    server: asia-hysteria.yourdomain.com
-    port: 443
-    password: securepass456
-    obfs: salamander
-    obfs-password: s3cr3t
-    udp: true
-
-  - name: "TUIC v5"
-    type: tuic
-    server: tuic.yourdomain.com
-    port: 443
-    uuid: de305d54-75b4-431b-adb2-eb6b9e546013
-    password: tuicpass001
-    congestion-control: bbr
-    udp-relay-mode: true
 
 proxy-groups:
   - name: Auto-Selector
@@ -62,9 +35,6 @@ proxy-groups:
     proxies:
       - VLESS Reality - Telegram
       - VLESS Reality - Amazon
-      - Hysteria2 - Europe
-      - Hysteria2 - Asia
-      - TUIC v5
 
 dns:
   enable: true
