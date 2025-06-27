@@ -1,5 +1,5 @@
 proxies:
-  - name: "VLESS Reality - JSDelivr CDN"
+  - name: "Reality | jsdelivr (Fast CDN)"
     type: vless
     server: bug.cloudflare.com
     port: 443
@@ -9,12 +9,27 @@ proxies:
     network: tcp
     reality-opts:
       public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-      short-id: "a1b2c3d4"
-      spider-x: /npm
+      short-id: "b4c0d3f1"
+      spider-x: /npm/vue
       server-name: cdn.jsdelivr.net
     client-fingerprint: chrome
 
-  - name: "VLESS Reality - Google Fonts"
+  - name: "Reality | tumblr (Hidden Media)"
+    type: vless
+    server: bug.cloudflare.com
+    port: 443
+    uuid: de305d54-75b4-431b-adb2-eb6b9e546013
+    cipher: none
+    tls: true
+    network: tcp
+    reality-opts:
+      public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
+      short-id: "e1f2a3c4"
+      spider-x: /media
+      server-name: assets.tumblr.com
+    client-fingerprint: edge
+
+  - name: "Reality | bing static (Microsoft Route)"
     type: vless
     server: bug.cloudflare.com
     port: 443
@@ -25,16 +40,19 @@ proxies:
     reality-opts:
       public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
       short-id: "11223344"
-      spider-x: /s
-      server-name: fonts.gstatic.com
-    client-fingerprint: safari
+      spider-x: /rps
+      server-name: r3.res.bing.com
+    client-fingerprint: ios
 
 proxy-groups:
-  - name: Auto-Selector
-    type: select
+  - name: Reality-GOD
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 600
     proxies:
-      - VLESS Reality - JSDelivr CDN
-      - VLESS Reality - Google Fonts
+      - Reality | jsdelivr (Fast CDN)
+      - Reality | tumblr (Hidden Media)
+      - Reality | bing static (Microsoft Route)
 
 dns:
   enable: true
@@ -47,8 +65,10 @@ dns:
     - 178.22.122.100
     - 1.1.1.1
     - 8.8.8.8
+    - https://dns.google/dns-query
+    - https://cloudflare-dns.com/dns-query
 
 rules:
   - DOMAIN-SUFFIX,ir,DIRECT
   - DOMAIN-SUFFIX,cn,DIRECT
-  - MATCH,Auto-Selector
+  - MATCH,Reality-GOD
