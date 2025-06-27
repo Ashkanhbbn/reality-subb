@@ -1,5 +1,7 @@
+# NekoBox - Optimized Reality Config (v2ray)
+
 proxies:
-  - name: "Reality | jsdelivr (Fast CDN)"
+  - name: "Reality | CDN Global"
     type: vless
     server: bug.cloudflare.com
     port: 443
@@ -10,11 +12,11 @@ proxies:
     reality-opts:
       public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
       short-id: "b4c0d3f1"
-      spider-x: /npm/vue
-      server-name: cdn.jsdelivr.net
+      spider-x: /
+      server-name: www.google.com
     client-fingerprint: chrome
 
-  - name: "Reality | tumblr (Hidden Media)"
+  - name: "Reality | Media Global"
     type: vless
     server: bug.cloudflare.com
     port: 443
@@ -25,11 +27,11 @@ proxies:
     reality-opts:
       public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
       short-id: "e1f2a3c4"
-      spider-x: /media
-      server-name: assets.tumblr.com
-    client-fingerprint: edge
+      spider-x: /
+      server-name: www.bing.com
+    client-fingerprint: chrome
 
-  - name: "Reality | bing static (Microsoft Route)"
+  - name: "Reality | Cloud Global"
     type: vless
     server: bug.cloudflare.com
     port: 443
@@ -40,35 +42,33 @@ proxies:
     reality-opts:
       public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
       short-id: "11223344"
-      spider-x: /rps
-      server-name: r3.res.bing.com
-    client-fingerprint: ios
+      spider-x: /
+      server-name: cloudflare.com
+    client-fingerprint: chrome
 
 proxy-groups:
   - name: Reality-GOD
-    type: url-test
-    url: http://cp.cloudflare.com/generate_204
-    interval: 600
+    type: fallback
+    url: http://www.gstatic.com/generate_204
+    interval: 300
     proxies:
-      - Reality | jsdelivr (Fast CDN)
-      - Reality | tumblr (Hidden Media)
-      - Reality | bing static (Microsoft Route)
+      - Reality | CDN Global
+      - Reality | Media Global
+      - Reality | Cloud Global
 
 dns:
   enable: true
   ipv6: false
-  listen: 0.0.0.0:53
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   nameserver:
-    - 10.202.10.202
-    - 178.22.122.100
-    - 1.1.1.1
-    - 8.8.8.8
+    - https://1.1.1.1/dns-query
     - https://dns.google/dns-query
-    - https://cloudflare-dns.com/dns-query
 
 rules:
   - DOMAIN-SUFFIX,ir,DIRECT
   - DOMAIN-SUFFIX,cn,DIRECT
+  - DOMAIN-SUFFIX,google.com,DIRECT
+  - DOMAIN-SUFFIX,gstatic.com,DIRECT
+  - GEOIP,IR,DIRECT
   - MATCH,Reality-GOD
