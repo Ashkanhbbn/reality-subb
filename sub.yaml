@@ -1,5 +1,5 @@
-# NekoBox Ultimate Reality Config (v4)
-# Optimized for Stability & Bypass
+# NekoBox Ultimate Config (v5) - Fixed Connection Issues
+# Last Updated: 2025-06-27
 
 # ---------------------------
 # Proxies (Reality)
@@ -59,7 +59,7 @@ proxies:
 proxy-groups:
   - name: "Reality-Main"
     type: fallback
-    url: "http://www.gstatic.com/generate_204"
+    url: "http://connectivitycheck.android.com/generate_204"  # تست اضطراری
     interval: 300
     tolerance: 100
     lazy: true
@@ -71,11 +71,11 @@ proxy-groups:
 
   - name: "Auto-Fallback"
     type: fallback
-    url: "http://connectivitycheck.gstatic.com/generate_204"
+    url: "http://www.apple.com/library/test/success.html"  # تست جایگزین
     interval: 600
     proxies:
       - "Reality-Main"
-      - DIRECT
+      - DIRECT  # حالت اضطراری
 
 # ---------------------------
 # DNS Configuration
@@ -83,14 +83,13 @@ proxy-groups:
 dns:
   enable: true
   ipv6: false
-  prefer-h3: true
+  prefer-h3: false  # غیرفعال برای پایداری
   enhanced-mode: redir-host
   nameserver:
-    - "https://1.1.1.1/dns-query#security.cloudflare-dns.com"
-    - "https://dns.google/dns-query#dns.google"
-    - "tls://8.8.4.4:853"
+    - "udp://1.1.1.1"  # حالت اضطراری UDP
+    - "https://dns.cloudflare.com/dns-query"
   fallback:
-    - "https://doh.opendns.com/dns-query"
+    - "udp://8.8.4.4"
     - "tls://dns10.quad9.net:853"
   fallback-filter:
     geoip: true
@@ -119,12 +118,6 @@ rules:
   # CDN Acceleration
   - DOMAIN-SUFFIX,akamai.net,Reality-Main
   - DOMAIN-SUFFIX,cloudfront.net,Reality-Main
-  - DOMAIN-SUFFIX,fastly.net,Reality-Main
-  
-  # Streaming Services
-  - DOMAIN-SUFFIX,netflix.com,Reality-Main
-  - DOMAIN-SUFFIX,disneyplus.com,Reality-Main
-  - DOMAIN-SUFFIX,hulu.com,Reality-Main
   
   # Final Rule
   - MATCH,Auto-Fallback
