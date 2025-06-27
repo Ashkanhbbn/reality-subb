@@ -1,237 +1,107 @@
-# IRAN GOD-MODE PRO v13.0 - Invincible Edition
-# Last Updated: 2025-07-01
+# IRAN AUTOPILOT ULTIMATE v15
+# Self-Configuring & Self-Healing System
 
-meta:
-  strategy: "adaptive_camouflage"
-  threat_level: "iran_ultimate"
-  encryption: "quantum_shield"
-
-# ===== لایه ۱: پروتکل‌های ترکیبی =====
+# ===== سیستم تولید خودکار مقادیر =====
 proxies:
-  # Reality (فوق‌پیشرفته)
-  - name: "REALITY-XRAY"
+  # Reality (مقادیر به صورت خودکار تولید می‌شوند)
+  - name: "REALITY-AUTO"
     type: vless
-    server: ${DYNAMIC_CDN}
+    server: "{{ iran_cdn }}"
     port: 443
-    uuid: YOUR_UUID_HERE
+    uuid: "{{ uuid }}"
     flow: xtls-rprx-vision
     tls: true
-    servername: ${RANDOM_IRANIAN_DOMAIN}
+    servername: "{{ iran_domain }}"
     reality-opts:
-      public-key: YOUR_PUBLIC_KEY_HERE
-      short-id: "$(openssl rand -hex 2)"
-      spider-x: "/${RANDOM_PATH}"
-    client-fingerprint: randomized
+      public-key: "{{ public_key }}"
+      short-id: "{{ short_id }}"
+      spider-x: "{{ iran_path }}"
+    client-fingerprint: "chrome"
     udp: true
 
-  # TUIC v5 (پروتکل جدید ضد DPI)
-  - name: "TUICv5-STEALTH"
+  # سایر پروتکل‌ها (همان الگو)
+  - name: "TUIC-AUTO"
     type: tuic
-    server: ${GAMING_CDN}
+    server: "{{ iran_cdn }}"
     port: 443
-    token: YOUR_TUIC_TOKEN
-    uuid: YOUR_UUID_HERE
-    alpn: ["h3"]
-    disable-sni: true
-    reduce-rtt: true
-    congestion-controller: bbr
+    token: "{{ tuic_token }}"
+    # ...
 
-  # Hysteria2 (بهینه‌شده برای شبکه‌های ضعیف)
-  - name: "HY2-ULTRA"
-    type: hysteria2
-    server: ${VIDEO_CDN}
-    port: 443
-    auth-str: YOUR_HY2_SECRET
-    obfs: salamander
-    obfs-password: "$(tr -dc A-Za-z0-9 </dev/urandom | head -c 16)"
-    sni: "${EDUCATION_DOMAIN}"
+# ===== اسکریپت تولید خودکار مقادیر =====
+autogen-script: |
+  #!/bin/bash
+  # تولید مقادیر پویا
+  export uuid=$(cat /proc/sys/kernel/random/uuid)
+  export public_key=$(openssl rand -base64 32 | tr -d '\n')
+  export short_id=$(openssl rand -hex 4)
+  export iran_cdn=$(shuf -n1 -e "edge.snappfood.ir" "cdn.snapp.ir" "dl.digikala.com")
+  export iran_domain=$(shuf -n1 -e "www.digikala.com" "www.torob.com" "www.sheypoor.com")
+  export iran_path=$(shuf -n1 -e "/static/img" "/images" "/assets")
+  export tuic_token=$(openssl rand -hex 16)
+  
+  # جایگزینی در کانفیگ
+  sed -i "s/{{ uuid }}/$uuid/g" /path/to/config.yaml
+  sed -i "s/{{ public_key }}/$public_key/g" /path/to/config.yaml
+  # ... (برای تمام متغیرها)
 
-  # Trojan-WebSocket (استتار پیشرفته)
-  - name: "TROJAN-WS"
-    type: trojan
-    server: ${ECOMMERCE_CDN}
-    port: 443
-    password: YOUR_PASSWORD
-    network: ws
-    ws-opts:
-      path: "/v2ray?$(date +%s)"
-      headers:
-        Host: "${RANDOM_HOST}"
-
-  # VMess + gRPC (پنهان‌کاری عمیق)
-  - name: "VMESS-GRPC"
-    type: vmess
-    server: ${TECH_CDN}
-    port: 443
-    uuid: YOUR_UUID_HERE
-    alterId: 0
-    cipher: aes-128-gcm
-    network: grpc
-    grpc-opts:
-      grpc-service-name: "G${RANDOM_SERVICE_NAME}"
-
-  # ShadowTLS v5 (جدیدترین نسخه)
-  - name: "SHADOWTLSv5"
-    type: shadowtls
-    server: ${NEWS_CDN}
-    port: 443
-    password: "YOUR_SHADOWTLS_PASS"
-    version: 5
-    host: "${RANDOM_NEWS_DOMAIN}"
-
-  # سیستم پشتیبان اضطراری (فعال در قطعی)
-  - name: "🚨 EMERGENCY-IR"
-    type: vless
-    server: "cdn.jabama.ir"
-    port: 443
-    uuid: EMERGENCY_UUID
-    flow: xtls-rprx-vision
-    tls: true
-    servername: "download.digikala.com"
-    reality-opts:
-      public-key: EMERGENCY_PUB_KEY
-      short-id: "8c5d"
-      spider-x: "/images"
-
-# ===== لایه ۲: سیستم DNS پویا =====
-dns:
+# ===== سیستم اجرای خودکار =====
+autorun:
   enable: true
-  listen: 0.0.0.0:5353
-  enhanced-mode: redir-host
-  fake-ip-range: 198.18.0.1/16
-  use-hosts: true
-  nameserver:
-    - "https://shecan.ir/dns-query#shecan"
-    - "https://dns.403.online/dns-query#403"
-    - "sdns://AQcAAAAAAAAAETk0LjE0MC4xNC4xNDo1NDQzINErR_JS3PLCu_iZEIbq95zkSV2LFsigxDIuUso_OQhzIjIuZG5zY3J5cHQuZGVmYXVsdC5uczEuYWRndWFyZC5jb20"
-  fallback:
-    - "tls://dns12.quad9.net:853#quad9"
-    - "https://doh.opendns.com/dns-query?dns=QlVBTg#opendns"
-  fallback-filter:
-    geoip: true
-    geoip-code: IR
-    ipcidr:
-      - 0.0.0.0/8
-      - 10.0.0.0/8
-    domain:
-      - "+.ir"
-      - "+.filter"
+  interval: 3600  # هر 1 ساعت
+  pre-commands:
+    - "pkill -f nekobox"  # توقف سرویس قدیمی
+  post-commands:
+    - "am start -n moe.nb4l.neko/.ui.MainActivity"  # راه‌اندازی مجدد
 
-# ===== لایه ۳: گروه‌های هوشمند =====
-proxy-groups:
-  - name: "🚀 AUTO-SWITCH"
-    type: url-test
-    url: "http://www.digikala.com/healthcheck"
-    interval: 120
-    tolerance: 50
-    lazy: true
-    disable-udp: false
-    proxies:
-      - REALITY-XRAY
-      - TUICv5-STEALTH
-      - HY2-ULTRA
-      - TROJAN-WS
-      - VMESS-GRPC
-      - SHADOWTLSv5
-      - "🚨 EMERGENCY-IR"
-
-  - name: "🔒 FAILSAFE-IR"
-    type: fallback
-    url: "http://cdn.snapp.ir/status"
-    interval: 60
-    proxies:
-      - "🚀 AUTO-SWITCH"
-      - DIRECT
-
-# ===== لایه ۴: قوانین هوشمند =====
-rules:
-  # Anti-DPI Traps
-  - DOMAIN-KEYWORD,snitch,REJECT
-  - DOMAIN-SUFFIX,ircert.ir,REJECT
-  - DOMAIN-SUFFIX,filter,REJECT
-  
-  # ترافیک حیاتی ایرانی
-  - DOMAIN-SUFFIX,snapp.ir,DIRECT
-  - DOMAIN-SUFFIX,digikala.com,DIRECT
-  - DOMAIN-SUFFIX,tehran.ir,DIRECT
-  
-  # پلتفرم‌های اجتماعی
-  - DOMAIN-SUFFIX,instagram.com,🚀 AUTO-SWITCH
-  - DOMAIN-SUFFIX,telegram.org,🚀 AUTO-SWITCH
-  - DOMAIN-SUFFIX,whatsapp.com,🚀 AUTO-SWITCH
-  
-  # سرویس‌های جهانی
-  - DOMAIN-SUFFIX,google.com,🚀 AUTO-SWITCH
-  - DOMAIN-SUFFIX,cloudflare.com,🚀 AUTO-SWITCH
-  - DOMAIN-SUFFIX,akamai.net,🚀 AUTO-SWITCH
-  
-  # قانون نهایی
-  - MATCH,🔒 FAILSAFE-IR
-
-# ===== لایه ۵: تنظیمات هسته =====
-tun:
+# ===== سیستم همگام‌سازی کلیدها =====
+key-sync:
   enable: true
-  stack: system
-  dns-hijack: ["any:53"]
-  mtu: 1350
-  auto-route: true
-  auto-detect-interface: true
-  strict-route: true
+  method: "ssh"  # یا telegram-bot
+  server: "your.server.ip"
+  port: 22
+  username: "root"
+  private-key: "/path/to/ssh_key"
+  remote-path: "/etc/reality/server.key"
+  sync-command: "cat {{ remote-path }} | base64 > /local/key.txt"
 
-# ===== لایه ۶: تکنیک‌های ضد DPI =====
-experimental:
-  tcp-fast-open: true
-  udp-fragment: true
-  sniff-tls-sni: true
-  proxy-protocol: 2
-  tcp-keep-alive-interval: 10
-  multiplex:
-    enabled: false
-    protocol: smux
-    max-connections: 4
-
-# ===== لایه ۷: سیستم چرخشی =====
-rotation:
+# ===== سیستم تشخیص و تعویض CDN =====
+cdn-rotator:
   enable: true
-  interval: 1800 # تغییر هر ۳۰ دقیقه
-  strategy: "domain-shuffle"
+  interval: 600  # هر 10 دقیقه
   pool:
-    - "cdn.snappfood.ir"
-    - "dl.digikala.com"
-    - "edge.snapp.ir"
-    - "download.iranapps.ir"
-    - "cdn.jabama.ir"
+    - "cdn1.snappfood.ir"
+    - "edge2.snapp.ir"
+    - "dl3.digikala.com"
+    - "download4.iranapps.ir"
+  health-check: "http://cdn-check.ir/status"
+  threshold: 200ms  # زمان پاسخ قابل قبول
 
-# ===== لایه ۸: مانیتورینگ پیشرفته =====
-monitoring:
+# ===== پیکربندی اصلی =====
+proxy-groups:
+  - name: "🚀 AUTO-PILOT"
+    type: url-test
+    url: "http://{{ iran_domain }}/health"
+    interval: 120
+    proxies:
+      - "REALITY-AUTO"
+      - "TUIC-AUTO"
+
+dns:
+  nameserver:
+    - "https://dns.auto/query"  # DNS هوشمند
+
+rules:
+  - "MATCH,🚀 AUTO-PILOT"
+
+# ===== سیستم گزارش‌گیری خودکار =====
+telegram-reporter:
   enable: true
-  port: 9090
-  metrics:
-    - "traffic"
-    - "connections"
-    - "latency"
-  alert-thresholds:
-    latency: 500ms
-    packet-loss: 15%
-  webhook: "https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage"
-
-# ===== لایه ۹: امنیت سخت‌افزاری =====
-security:
-  client-fingerprint: randomized
-  tls-min-version: "1.3"
-  zero-ttl: true
-  anti-scan: true
-  decoy-traffic:
-    enable: true
-    interval: 300
-    targets:
-      - "www.digikala.com"
-      - "cdn.snapp.ir"
-
-# ===== لایه ۱۰: به‌روزرسانی خودکار =====
-auto-update:
-  enable: true
-  url: "https://raw.githubusercontent.com/YOUR_USERNAME/reality-subb/main/god-mode-pro.yaml"
-  interval: 10800 # هر ۳ ساعت
-  encryption-key: "YOUR_GPG_KEY"
-  signature-check: true
+  bot-token: "YOUR_BOT_TOKEN"
+  chat-id: "YOUR_CHAT_ID"
+  report-interval: 86400  # هر 24 ساعت
+  report-template: |
+    📊 گزارش سیستم AUTOPILOT
+    ⏱ زمان کارکرد: {{ uptime }}
+    📡 CDN فعلی: {{ iran_cdn }}
+    📶 کیفیت اتصال: {{ ping }}ms
+    🔑 کلید فعلی: {{ public_key | truncate(8) }}
