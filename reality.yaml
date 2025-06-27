@@ -1,17 +1,18 @@
 proxies:
-  - name: "Reality‑Discord"
+  - name: "IR-MCI-Reality‑Telegram"
     type: vless
     server: bug.cloudflare.com
     port: 443
     uuid: de305d54-75b4-431b-adb2-eb6b9e546013
     flow: xtls-rprx-vision
     tls: reality
-    sni: cdn.discordapp.com
+    sni: cdn.telegram-cdn.org
     fingerprint: chrome
     pbk: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-    sid: ss‑1
-    spx: "/discord"
-  - name: "Reality‑TikTok"
+    sid: mci‑1
+    spx: "/cdn"
+
+  - name: "IR-IRANCELL-Reality‑TikTok"
     type: vless
     server: bug.cloudflare.com
     port: 443
@@ -21,59 +22,15 @@ proxies:
     sni: api16-normal-c-useast1a.tiktokv.com
     fingerprint: chrome
     pbk: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-    sid: ss‑2
-    spx: "/tiktok"
-  - name: "Reality‑Apple"
-    type: vless
-    server: bug.cloudflare.com
-    port: 443
-    uuid: de305d54-75b4-431b-adb2-eb6b9e546013
-    flow: xtls-rprx-vision
-    tls: reality
-    sni: appleid.apple.com
-    fingerprint: chrome
-    pbk: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-    sid: ss‑3
-    spx: "/apple"
-  - name: "Reality‑Microsoft"
-    type: vless
-    server: bug.cloudflare.com
-    port: 443
-    uuid: de305d54-75b4-431b-adb2-eb6b9e546013
-    flow: xtls-rprx-vision
-    tls: reality
-    sni: www.bing.com
-    fingerprint: chrome
-    pbk: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-    sid: ss‑4
-    spx: "/microsoft"
-  - name: "Reality‑Amazon"
-    type: vless
-    server: bug.cloudflare.com
-    port: 443
-    uuid: de305d54-75b4-431b-adb2-eb6b9e546013
-    flow: xtls-rprx-vision
-    tls: reality
-    sni: s3.amazonaws.com
-    fingerprint: chrome
-    pbk: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-    sid: ss‑5
-    spx: "/amazon"
+    sid: irancell‑2
+    spx: "/tt"
 
 proxy-groups:
-  - name: "Auto‑Reality‑Group"
+  - name: "Reality‑Iran‑Mobile"
     type: select
     proxies:
-      - Reality‑Discord
-      - Reality‑TikTok
-      - Reality‑Apple
-      - Reality‑Microsoft
-      - Reality‑Amazon
-    url: "http://www.gstatic.com/generate_204"
-    interval: 600
-    strategy: latency
+      - IR-MCI-Reality‑Telegram
+      - IR-IRANCELL-Reality‑TikTok
 
 rules:
-  - DOMAIN-KEYWORD,telegram,Auto‑Reality‑Group
-  - DOMAIN-KEYWORD,youtube,Auto‑Reality‑Group
-  - MATCH,Auto‑Reality‑Group
+  - MATCH,Reality‑Iran‑Mobile
