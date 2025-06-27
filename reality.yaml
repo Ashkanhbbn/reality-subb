@@ -1,5 +1,16 @@
+dns:
+  enable: true
+  nameserver:
+    - 8.8.8.8
+    - 1.1.1.1
+  fallback:
+    - 9.9.9.9
+    - 94.140.14.14
+  disableCache: false
+  queryStrategy: use_ipv4
+
 proxies:
-  - name: "IR-MCI-Reality‑Telegram"
+  - name: "Reality-Telegram-MCI"
     type: vless
     server: bug.cloudflare.com
     port: 443
@@ -12,7 +23,7 @@ proxies:
     sid: mci‑1
     spx: "/cdn"
 
-  - name: "IR-IRANCELL-Reality‑TikTok"
+  - name: "Reality-TikTok-Irancell"
     type: vless
     server: bug.cloudflare.com
     port: 443
@@ -22,15 +33,15 @@ proxies:
     sni: api16-normal-c-useast1a.tiktokv.com
     fingerprint: chrome
     pbk: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
-    sid: irancell‑2
+    sid: irn‑2
     spx: "/tt"
 
 proxy-groups:
-  - name: "Reality‑Iran‑Mobile"
+  - name: "Reality-Auto"
     type: select
     proxies:
-      - IR-MCI-Reality‑Telegram
-      - IR-IRANCELL-Reality‑TikTok
+      - Reality-Telegram-MCI
+      - Reality-TikTok-Irancell
 
 rules:
-  - MATCH,Reality‑Iran‑Mobile
+  - MATCH,Reality-Auto
