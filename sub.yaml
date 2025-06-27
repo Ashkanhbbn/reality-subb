@@ -1,5 +1,5 @@
 proxies:
-  - name: "VLESS Reality - Telegram CDN"
+  - name: "VLESS Reality - JSDelivr CDN"
     type: vless
     server: bug.cloudflare.com
     port: 443
@@ -10,11 +10,11 @@ proxies:
     reality-opts:
       public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
       short-id: "a1b2c3d4"
-      spider-x: /cdn
-      server-name: cdn.telegram-cdn.org
+      spider-x: /npm
+      server-name: cdn.jsdelivr.net
     client-fingerprint: chrome
 
-  - name: "VLESS Reality - Amazon S3"
+  - name: "VLESS Reality - Google Fonts"
     type: vless
     server: bug.cloudflare.com
     port: 443
@@ -25,16 +25,16 @@ proxies:
     reality-opts:
       public-key: J4qJrcRWbW9KOPkz9e3h3q3nlkIisTD4xTx9fbsWRUg
       short-id: "11223344"
-      spider-x: /aws
-      server-name: s3.amazonaws.com
+      spider-x: /s
+      server-name: fonts.gstatic.com
     client-fingerprint: safari
 
 proxy-groups:
   - name: Auto-Selector
     type: select
     proxies:
-      - VLESS Reality - Telegram CDN
-      - VLESS Reality - Amazon S3
+      - VLESS Reality - JSDelivr CDN
+      - VLESS Reality - Google Fonts
 
 dns:
   enable: true
@@ -43,11 +43,10 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   nameserver:
-    - 8.8.8.8
-    - 1.1.1.1
     - 10.202.10.202
-    - https://dns.google/dns-query
-    - https://cloudflare-dns.com/dns-query
+    - 178.22.122.100
+    - 1.1.1.1
+    - 8.8.8.8
 
 rules:
   - DOMAIN-SUFFIX,ir,DIRECT
