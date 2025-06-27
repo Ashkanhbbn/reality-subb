@@ -28,3 +28,28 @@ proxies:
       spider-x: /aws
       server-name: s3.amazonaws.com
     client-fingerprint: safari
+
+proxy-groups:
+  - name: Auto-Selector
+    type: select
+    proxies:
+      - VLESS Reality - Telegram CDN
+      - VLESS Reality - Amazon S3
+
+dns:
+  enable: true
+  ipv6: false
+  listen: 0.0.0.0:53
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  nameserver:
+    - 8.8.8.8
+    - 1.1.1.1
+    - 10.202.10.202        # DNS داخلی ایران برای fallback
+    - https://dns.google/dns-query
+    - https://cloudflare-dns.com/dns-query
+
+rules:
+  - DOMAIN-SUFFIX,ir,DIRECT
+  - DOMAIN-SUFFIX,cn,DIRECT
+  - MATCH,Auto-Selector
